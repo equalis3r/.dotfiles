@@ -1,0 +1,60 @@
+@define-color   tx  #d0d0d0;
+@define-color   bg  #3E4452;
+@define-color   hl  #82aaff;
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+	font-family: "Font Awesome 5 Free";
+    font-size: 13pt;
+}
+
+window#waybar {
+    color: @tx;
+    background: @bg;
+}
+
+window#waybar.hidden{
+    opacity: 0.0;
+}
+
+#workspaces button.visible {
+    color: @bg;
+    background: #71c6e7;
+}
+
+#workspaces button.current_output.focused {
+	color: @bg;
+    background: @hl;
+}
+
+#workspaces button,
+#mode,
+#idle_inhibitor,
+#window,
+#custom-layout,
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#custom-clock,
+#custom-weather,
+#custom-power {
+    color: @tx;
+    background: @bg;
+	padding: 0px 18px 0px 18px;
+}
+
+#clock.time{
+    color: @tx;
+    background: @bg;
+	padding: 0px 18px 0px 18px;
+}
+
+#clock.date{
+    color: @tx;
+    background: @bg;
+	padding: 0px 18px 0px 18px;
+}

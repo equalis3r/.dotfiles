@@ -1,0 +1,205 @@
+# Use Mod1 for Alt, Mod4 for Logo key
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term foot
+set $wallpaper ~/drive-local/background.jpg
+set $laptop eDP-1
+set $gnome-schema org.gnome.desktop.interface
+set $menu sirula | xargs swaymsg exec --
+
+### Autostart
+exec kanshi
+#exec /usr/lib/geoclue-2.0/demos/agent
+exec mako
+exec ibus-daemon -drx
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec gammastep
+exec firefox
+
+### Key bindings
+    # Basics:
+    bindsym $mod+Return             exec $term
+    bindsym $mod+Shift+q            kill
+    bindsym $mod+d                  exec $menu
+
+    # Volume + Brightness
+    bindsym XF86AudioRaiseVolume    exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume    exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioMute           exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioMicMute        exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    bindsym XF86MonBrightnessDown   exec light -U 5
+    bindsym XF86MonBrightnessUp     exec light -A 5
+
+    # Other special keys
+    # XF86Favorites
+    # XF86HomePage
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier               $mod normal
+    bindsym $mod+Shift+r            reload
+    # bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
+
+    # Move your focus around
+    bindsym $mod+$left              focus left
+    bindsym $mod+$down              focus down
+    bindsym $mod+$up                focus up
+    bindsym $mod+$right             focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left        move left
+    bindsym $mod+Shift+$down        move down
+    bindsym $mod+Shift+$up          move up
+    bindsym $mod+Shift+$right       move right
+
+    # Switch to workspace (can be words, not just numbers)
+    bindsym $mod+1                  workspace number 1
+    bindsym $mod+2                  workspace number 2
+    bindsym $mod+3                  workspace number 3
+    bindsym $mod+4                  workspace number 4
+    bindsym $mod+5                  workspace number 5
+    bindsym $mod+6                  workspace number 6
+    bindsym $mod+7                  workspace number 7
+    bindsym $mod+8                  workspace number 8
+    bindsym $mod+9                  workspace number 9
+    bindsym $mod+0                  workspace number 10
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+1            move container to workspace number 1
+    bindsym $mod+Shift+2            move container to workspace number 2
+    bindsym $mod+Shift+3            move container to workspace number 3
+    bindsym $mod+Shift+4            move container to workspace number 4
+    bindsym $mod+Shift+5            move container to workspace number 5
+    bindsym $mod+Shift+6            move container to workspace number 6
+    bindsym $mod+Shift+7            move container to workspace number 7
+    bindsym $mod+Shift+8            move container to workspace number 8
+    bindsym $mod+Shift+9            move container to workspace number 9
+    bindsym $mod+Shift+0            move container to workspace number 10
+
+    # Layout
+    bindsym $mod+b                  splith
+    bindsym $mod+v                  splitv
+    bindsym $mod+s                  layout stacking
+    bindsym $mod+w                  layout tabbed
+    bindsym $mod+e                  layout toggle split
+    bindsym $mod+f                  fullscreen
+    bindsym $mod+Shift+f            fullscreen global
+    bindsym $mod+Shift+space        floating toggle
+    bindsym $mod+space              focus mode_toggle
+    bindsym $mod+a                  focus parent
+
+    # Scratchpad:
+    bindsym $mod+Shift+minus        move scratchpad
+    bindsym $mod+minus              scratchpad show
+
+    # Resizing containers:
+    mode "resize" {
+        bindsym $left resize shrink width 10px
+        bindsym $down resize grow height 10px
+        bindsym $up resize shrink height 10px
+        bindsym $right resize grow width 10px
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+r mode "resize"
+
+    # Screenshot
+    bindsym Print                   exec grim -t jpeg ~/Pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
+    bindsym	$mod+Backspace          exec grim -g "$(slurp)" ~/Pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
+    bindsym $mod+p                  exec grim -g "$(slurp)" - | wl-copy
+
+    # Change input methods between EN and VI
+    bindsym $mod+z                  exec $HOME/.config/sway/input-method.sh
+
+    # Toggle Waybar
+    bindsym $mod+x                  exec killall -SIGUSR1 waybar
+
+    # Lock screen
+    bindsym Alt+Shift+l             exec swaylock -i $wallpaper
+    exec swayidle -w \
+            timeout 600 'swaylock -f -c 000000 -i $wallpaper' \
+            timeout 600 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' \
+            before-sleep 'swaylock -f -c 000000 -i $wallpaper'
+
+### Output/Input configuration
+# Use swaymsg -t get_outputs to get outputs
+# Use swaymsg -t get_intputs to get inputs
+output * bg $wallpaper fill
+output eDP-1 pos 0,0
+output DP-2 mode 1920x1080@143.997Hz
+# output HDMI-A-1
+# output HEADLESS-1 mode 2388x1668 scale 1.5
+
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+input "2:14:ETPS/2_Elantech_Touchpad" {
+   dwt enabled
+   tap enabled
+   tap_button_map lrm
+   pointer_accel 0.1
+   natural_scroll enabled
+   scroll_factor 0.5
+   middle_emulation enabled
+   events disabled_on_external_mouse
+}
+
+input "1133:50503:Logitech_USB_Receiver" {
+    scroll_factor 1
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout us
+    xkb_options ctrl:swapcaps
+}
+
+### Window config
+for_window [app_id=firefox] move container to workspace number 1
+for_window [class="Steam"] floating enable, move container to workspace number 4
+for_window [app_id=pavucontrol] floating enable
+for_window [app_id=blueberry] floating enable
+for_window [app_id=piper] floating enable
+for_window [app_id=spotify] floating enable
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 2
+
+### Appearance
+bar {
+    swaybar_command waybar
+}
+gaps inner 5
+gaps outer 2
+default_border pixel 2
+default_floating_border normal
+titlebar_padding 5 1
+
+set $black      #434758
+set $red        #f07178
+set $blue       #82aaff
+set $white      #d0d0d0
+set $magneta    #c792ea
+
+# class                 border     backgr.    text     indic.   child_border
+client.focused          $blue      $blue      $black   $black   $blue
+client.focused_inactive $black     $black     $white   $black   $black
+client.unfocused        $black     $black     $white   $black   $black
+client.urgent           $magneta   $magneta   $black   $black   $magneta
+
+# Increase swaywm title window font and cursor size
+font pango:monospace 14
+seat seat0 xcursor_theme default 30
+
+# GTK-3.0
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-size 30
+    gsettings set $gnome-schema font-name 'DejaVu Sans 14'
+}
+include /etc/sway/config.d/*

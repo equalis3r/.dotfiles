@@ -1,0 +1,18 @@
+font=FiraCode Nerd Font 12
+background-color=#232136
+text-color=#b9bfca
+padding=10
+border-size=3
+default-timeout=5000
+icons=1
+icon-path=/usr/share/icons/Adwaita
+
+[urgency=low]
+border-color=#b1d196
+
+[urgency=normal]
+border-color=#82aaff
+
+[urgency=high]
+border-color=#d06f79
+ignore-timeout=1

@@ -1,0 +1,29 @@
+set window-title-basename true
+set window-title-page true
+set guioptions v
+set font "DejaVu Sans 14"
+# set selection-clipboard clipboard
+
+# Palenight
+set default-bg                  "#282c34"
+set default-fg                  "#dcdfe4"
+set inputbar-bg                 "#292d3e"
+set inputbar-fg                 "#82aaff"
+set highlight-color             "#9cc4ff"
+set highlight-active-color      "#e1acff"
+set recolor-lightcolor          "#292d3e"
+set recolor-darkcolor           "#d0d0d0"
+set recolor-keephue             "false"
+set statusbar-bg                "#434C5E"
+set statusbar-fg                "#D8DEE9"
+
+set notification-bg             "#2E3440"
+set notification-fg             "#8FBCBB"
+set notification-error-bg       "#2E3440"
+set notification-error-fg       "#BF616A"
+set notification-warning-bg     "#2E3440"
+set notification-warning-fg     "#BF616A"
+set completion-bg               "#3B4252"
+set completion-fg               "#81A1C1"
+set completion-highlight-fg     "#8FBCBB"
+set completion-highlight-bg     "#81A1C1"

@@ -1,0 +1,89 @@
+# Enable debugging output
+# debug
+
+ignore-empty-password
+show-failed-attempts
+
+# Display the given image
+# image [[<output>]:]<path>
+
+# Sets the color of backspace highlight segments
+bs-hl-color=e19b15ff
+
+# Sets the color of backspace highlight segments when Caps Lock is active
+caps-lock-bs-hl-color=e19b15ff
+
+# Sets the color of the key press highlight segments when Caps Lock is active
+caps-lock-key-hl-color=e19b15ff
+
+# Sets the font of the text
+font=Source Code Pro
+
+# Sets a fixed font size for the indicator text
+# font-size=24
+
+# Sets the indicator to show even if idle
+# indicator-idle-visible
+
+# Sets the indicator radius (default: 50)
+indicator-radius=180
+
+# Sets the indicator thickness (default: 10)
+indicator-thickness=18
+
+# Sets the color of the inside of the indicator
+inside-color=000000ff
+
+# Sets the color of the inside of the indicator when cleared
+inside-clear-color=000000ff
+
+# Sets the color of the inside of the indicator when Caps Lock is active
+# inside-caps-lock-color=<rrggbb[aa]>
+
+# Sets the color of the inside of the indicator when verifying
+inside-ver-color=000000ff
+
+# Sets the color of the inside of the indicator when invalid
+inside-wrong-color=000000ff
+
+# Sets the color of key press highlight segments
+key-hl-color=61afefff
+
+# Sets the background color of the box containing the layout text
+layout-bg-color=000000ff
+
+# Use the ring color for the line between the inside and ring
+line-uses-ring
+
+# Sets the color of the outside of the indicator when typing or idle
+ring-color=333333ff
+
+# Sets the color of the outside of the indicator when cleared
+ring-clear-color=333333ff
+
+# Sets the color of the ring of the indicator when Caps Lock is active
+# ring-caps-lock-color=<rrggbb[aa]>
+
+# Sets the color of the outside of the indicator when verifying
+ring-ver-color=333333ff
+
+# Sets the color of the outside of the indicator when invalid
+ring-wrong-color=c30f02ff
+
+# Sets the color of the lines that separate highlight segments
+separator-color=61afefff
+
+# Sets the color of the text
+text-color=61afefff
+
+# Sets the color of the text when cleared
+text-clear-color=61afefff
+
+# Sets the color of the text whenCaps Lock is active
+# text-caps-lock-color=<rrggbb[aa]>
+
+# Sets the color of the text when verifying
+text-ver-color=61afefff
+
+# Sets the color of the text when invalid
+text-wrong-color=61afefff
