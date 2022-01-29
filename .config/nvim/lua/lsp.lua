@@ -32,8 +32,10 @@ local on_attach = function(client, bufnr)
 	if client.resolved_capabilities.document_formatting then
 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
 	end
+	if client.resolved_capabilities.signature_help then
+		vim.cmd([[autocmd CursorHoldI * lua vim.lsp.buf.signature_help()]])
+	end
 	vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil,{focusable=false,scope="line"})]])
-	vim.cmd([[autocmd CursorHoldI * lua vim.lsp.buf.signature_help()]])
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -1,6 +1,5 @@
 require("packer").startup(function(use)
-	-- Packer manager
-	use("wbthomason/packer.nvim")
+	use("wbthomason/packer.nvim") -- Packer manager
 	use("tpope/vim-fugitive")
 	-- LSP config, autocompletion, and formatting
 	use("neovim/nvim-lspconfig")
@@ -8,11 +7,35 @@ require("packer").startup(function(use)
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
 	use("saadparwaiz1/cmp_luasnip")
-	use("L3MON4D3/LuaSnip")
 	use("simrat39/rust-tools.nvim")
 	use("mfussenegger/nvim-jdtls")
 	use("scalameta/nvim-metals")
 	use("jose-elias-alvarez/null-ls.nvim")
+	-- Snippet
+	use({
+		"L3MON4D3/LuaSnip",
+		config = function()
+			require("luasnip.loaders.from_vscode").load()
+		end,
+	})
+	use("rafamadriz/friendly-snippets")
+	-- Docgen
+	use({
+		"danymat/neogen",
+		config = function()
+			require("neogen").setup({
+				enabled = true,
+				languages = {
+					python = {
+						template = {
+							annotation_convention = "numpydoc",
+						},
+					},
+				},
+			})
+		end,
+		requires = "nvim-treesitter/nvim-treesitter",
+	})
 	-- DAP
 	use("mfussenegger/nvim-dap")
 	use({
@@ -46,6 +69,18 @@ require("packer").startup(function(use)
 						prompt = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 						results = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 						preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+					},
+					layout_config = {
+						horizontal = {
+							preview_width = 0.55,
+							results_width = 0.80,
+						},
+						vertical = {
+							mirror = false,
+						},
+						width = 0.87,
+						height = 0.80,
+						preview_cutoff = 120,
 					},
 				},
 				extensions = {

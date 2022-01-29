@@ -12,9 +12,8 @@ set $menu sirula | xargs swaymsg exec --
 
 ### Autostart
 exec kanshi
-#exec /usr/lib/geoclue-2.0/demos/agent
 exec mako
-exec ibus-daemon -drx
+exec --no-startup-id fcitx5 -d
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec gammastep
 exec firefox
@@ -109,15 +108,9 @@ exec firefox
     bindsym $mod+r mode "resize"
 
     # Screenshot
-    bindsym Print                   exec grim -t jpeg ~/Pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
-    bindsym	$mod+Backspace          exec grim -g "$(slurp)" ~/Pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
+    bindsym Print                   exec grim -t jpeg ~/pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
+    bindsym	$mod+Backspace          exec grim -g "$(slurp)" ~/pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
     bindsym $mod+p                  exec grim -g "$(slurp)" - | wl-copy
-
-    # Change input methods between EN and VI
-    bindsym $mod+z                  exec $HOME/.config/sway/input-method.sh
-
-    # Toggle Waybar
-    bindsym $mod+x                  exec killall -SIGUSR1 waybar
 
     # Lock screen
     bindsym Alt+Shift+l             exec swaylock -i $wallpaper
@@ -131,10 +124,10 @@ exec firefox
 # Use swaymsg -t get_outputs to get outputs
 # Use swaymsg -t get_intputs to get inputs
 output * bg $wallpaper fill
-output eDP-1 pos 0,0
-output DP-2 mode 1920x1080@143.997Hz
-# output HDMI-A-1
-# output HEADLESS-1 mode 2388x1668 scale 1.5
+#output eDP-1 pos 0,0
+#output DP-2 mode 1920x1080@143.997Hz
+#output HDMI-A-1
+#output HEADLESS-1 mode 2388x1668 scale 1.5
 
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
@@ -167,14 +160,30 @@ for_window [app_id=blueberry] floating enable
 for_window [app_id=piper] floating enable
 for_window [app_id=spotify] floating enable
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 2
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### Appearance
 bar {
-    swaybar_command waybar
+    status_command i3status-rs
+    position top
+    font pango:FiraCode Nerd Font SemiBold 12
+    separator_symbol ""
+    colors {
+        background #3E4452
+        statusline #D0D0D0
+        focused_workspace #82AAFF #82AAFF #3E4452
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+    }
+    workspace_min_width 25px
+    tray_output none
 }
-gaps inner 5
-gaps outer 2
-default_border pixel 2
+gaps inner 0
+gaps outer 0
+smart_gaps off
+default_border pixel 3
 default_floating_border normal
 titlebar_padding 5 1
 
@@ -191,7 +200,7 @@ client.unfocused        $black     $black     $white   $black   $black
 client.urgent           $magneta   $magneta   $black   $black   $magneta
 
 # Increase swaywm title window font and cursor size
-font pango:monospace 14
+font pango:FiraCode Nerd Font SemiBold 12
 seat seat0 xcursor_theme default 30
 
 # GTK-3.0

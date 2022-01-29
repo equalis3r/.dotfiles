@@ -1,13 +1,22 @@
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 
-# History
+# history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 setopt histignorealldups
 
-# Editor
+# export environments necessary for wayland session
+# export LIBSEAT_BACKEND=logind
+# export MOZ_ENABLE_WAYLAND=1
+# export XDG_CURRENT_DESKTOP=sway
+# export XDG_SESSION_TYPE=wayland
+# export GTK_IM_MODULE=ibus
+# export QT_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus
+
+# set neovim as default editor
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 bindkey -v
@@ -41,7 +50,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
-# Emit the OSC 7 escape sequence
+# emit the OSC 7 escape sequence
 _urlencode() {
 	local length="${#1}"
 	for (( i = 0; i < length; i++ )); do
@@ -58,7 +67,7 @@ osc7_cwd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook -Uz chpwd osc7_cwd
 
-# For a full list of active aliases, run `alias`.
+# run `alias` for full list of active aliases
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"

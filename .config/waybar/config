@@ -30,8 +30,9 @@
 		"format-icons": {
             "1":            "",
             "2":            "",
-            "3":            "",
-            "4":            "",
+            "3":            "",
+            "4":            "",
+            "5":            "",
             "urgent":       "",
             "focused":      "",
             "default":      "",
@@ -118,13 +119,6 @@
 		"on-click":         "~/.config/waybar/scripts/powermenu.sh",
         "tooltip":          false,
 	},
-    "custom/layout": {
-        "interval":         5,
-        "format":           " <span font-family='FiraCode Nerd Font' weight='bold'>{}</span>",
-        "exec":             "~/.config/waybar/scripts/layout.sh",
-        "on-click":         "~/.config/sway/input-method.sh",
-        "tooltip":          false,
-    },
     "custom/weather": {
         "format":           "{}",
         "interval":         900,

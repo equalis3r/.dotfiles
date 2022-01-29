@@ -1,7 +1,7 @@
 require("plugins")
 require("lsp")
-require("mappings")
 require("treesitter")
+require("mappings")
 require("completion")
 
 --vim.o.hlsearch = false

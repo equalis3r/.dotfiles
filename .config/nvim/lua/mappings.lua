@@ -36,6 +36,7 @@ function M.setup(bufnr)
 	local keymap = {
 		["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
 		["C-k"] = { "<cmd>lua vim.lsp.signature_help()<CR>", "Signature help" },
+		["<leader>ng"] = { "<cmd>Neogen<CR>", "Generate docstring" },
 
 		["<leader>"] = {
 			name = "+General",
