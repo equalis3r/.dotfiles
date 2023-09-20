@@ -1,47 +1,54 @@
 [theme]
-name = "native"
+theme = "native"
 
 [icons]
-name = "awesome5"
+icons = "awesome5"
 
 [[block]]
 block = "weather"
-format = " {weather}{temp}C"
-autolocate = false
-service = { name = "openweathermap", api_key = "172d9bcd52349d130e5b0c5bf4adf7f6", city_id = "2751283", units = "metric" }
+[block.service]
+name = "openweathermap"
+api_key = "172d9bcd52349d130e5b0c5bf4adf7f6"
+city_id = "2751283"
+units = "metric"
 
 [[block]]
 block = "sound"
-on_click = "pavucontrol"
 step_width = 1
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
 
 [[block]]
 block = "bluetooth"
 mac = "00:1B:66:BC:44:DC"
-format = "Momentum TW2"
-on_click = "blueberry"
+format = " $icon Earbuds "
+disconnected_format = " $icon "
 
 [[block]]
 block = "net"
 device = "wlan0"
-format = " {ssid}"
-interval = 5
-on_click = "foot -e iwctl"
+format = " $icon $ip "
+missing_format = " $icon "
 
 [[block]]
-block = "battery"
-allow_missing = true
-hide_missing = true
-interval = 30
-format = " {percentage}"
+block = "net"
+device = "enp2s0f0"
+format = " $icon $ip "
+missing_format = ""
 
 [[block]]
 block = "time"
-interval = 5
-format = "%a %d/%m %R"
+format = " $icon $timestamp.datetime(f:'%a %d/%m %R') "
 
 [[block]]
 block = "custom"
 command = "echo \uf011"
-on_click = "$HOME/.config/i3status-rust/scripts/powermenu.sh"
 interval = "once"
+[[block.click]]
+button = "left"
+cmd = "$HOME/.config/i3status-rust/scripts/powermenu.sh"
+
+[[block]]
+block = "battery"
+interval = 60

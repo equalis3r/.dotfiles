@@ -8,7 +8,7 @@ EnumerateForwardKeys=
 # Enumerate Input Method Backward
 EnumerateBackwardKeys=
 # Skip first input method while enumerating
-EnumerateSkipFirst=True
+EnumerateSkipFirst=False
 # Enumerate Input Method Group Forward
 EnumerateGroupForwardKeys=
 # Enumerate Input Method Group Backward
@@ -48,6 +48,10 @@ CompactInputMethodInformation=False
 ShowFirstInputMethodInformation=False
 # Default page size
 DefaultPageSize=5
+# Override Xkb Option
+OverrideXkbOption=False
+# Custom Xkb Option
+CustomXkbOption=
 # Force Enabled Addons
 EnabledAddons=
 # Force Disabled Addons

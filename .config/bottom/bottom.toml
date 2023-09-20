@@ -8,7 +8,7 @@
 
 [flags]
 # Whether to hide the average cpu entry.
-#hide_avg_cpu = false
+hide_avg_cpu = true
 # Whether to use dot markers rather than braille.
 #dot_marker = false
 # The update rate of the application.
@@ -40,7 +40,7 @@
 #default_widget_type = "proc"
 #default_widget_count = 1
 # Use basic mode
-#basic = true
+basic = true
 # Use the old network legend style
 #use_old_network_legend = false
 # Remove space in tables

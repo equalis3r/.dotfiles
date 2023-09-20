@@ -4,19 +4,19 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term foot
+set $term alacritty
 set $wallpaper ~/drive-local/background.jpg
 set $laptop eDP-1
 set $gnome-schema org.gnome.desktop.interface
-set $menu sirula | xargs swaymsg exec --
+set $menu fuzzel --font='Iosevka Nerd Font:size=14' -b 232136fd -s 82aaffff -m d0d0d0ff -C 82aaffff
+set $font_family DejaVu Sans Mono
+set $font_size 12
 
 ### Autostart
-exec kanshi
 exec mako
-exec --no-startup-id fcitx5 -d
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec gammastep
 exec firefox
+exec --no-startup-id gammastep
+exec --no-startup-id fcitx5 -d
 
 ### Key bindings
     # Basics:
@@ -29,8 +29,10 @@ exec firefox
     bindsym XF86AudioLowerVolume    exec pactl set-sink-volume @DEFAULT_SINK@ -5%
     bindsym XF86AudioMute           exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym XF86AudioMicMute        exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-    bindsym XF86MonBrightnessDown   exec light -U 5
-    bindsym XF86MonBrightnessUp     exec light -A 5
+    bindsym XF86MonBrightnessDown   exec brightnessctl set 5%-
+    bindsym XF86MonBrightnessUp     exec brightnessctl set 5%+
+
+    # Change input-method using $mod+z
 
     # Other special keys
     # XF86Favorites
@@ -43,7 +45,6 @@ exec firefox
     # mouse button for dragging.
     floating_modifier               $mod normal
     bindsym $mod+Shift+r            reload
-    # bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
 
     # Move your focus around
     bindsym $mod+$left              focus left
@@ -108,25 +109,22 @@ exec firefox
     bindsym $mod+r mode "resize"
 
     # Screenshot
-    bindsym Print                   exec grim -t jpeg ~/pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
-    bindsym	$mod+Backspace          exec grim -g "$(slurp)" ~/pictures/$(date +%Y-%m-%d_%H-%m-%s).jpg
-    bindsym $mod+p                  exec grim -g "$(slurp)" - | wl-copy
+    bindsym Print                   exec grimshot --notify copy area
 
     # Lock screen
-    bindsym Alt+Shift+l             exec swaylock -i $wallpaper
     exec swayidle -w \
-            timeout 600 'swaylock -f -c 000000 -i $wallpaper' \
-            timeout 600 'swaymsg "output * dpms off"' \
+            timeout 1800 'swaylock -f -c 000000 -i $wallpaper' \
+            timeout 1800 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"' \
             before-sleep 'swaylock -f -c 000000 -i $wallpaper'
 
 ### Output/Input configuration
 # Use swaymsg -t get_outputs to get outputs
-# Use swaymsg -t get_intputs to get inputs
+# Use swaymsg -t get_inputs to get inputs
 output * bg $wallpaper fill
-#output eDP-1 pos 0,0
-#output DP-2 mode 1920x1080@143.997Hz
-#output HDMI-A-1
+output eDP-1 pos 0,1080
+output HDMI-A-1 pos 0,0 mode 1920x1080@60Hz
+#output DP-2 mode 1920x1080@120Hz adaptive_sync on
 #output HEADLESS-1 mode 2388x1668 scale 1.5
 
 bindswitch --reload --locked lid:on output $laptop disable
@@ -136,15 +134,11 @@ input "2:14:ETPS/2_Elantech_Touchpad" {
    dwt enabled
    tap enabled
    tap_button_map lrm
-   pointer_accel 0.1
+   pointer_accel 0.4
    natural_scroll enabled
    scroll_factor 0.5
    middle_emulation enabled
    events disabled_on_external_mouse
-}
-
-input "1133:50503:Logitech_USB_Receiver" {
-    scroll_factor 1
 }
 
 input "1:1:AT_Translated_Set_2_keyboard" {
@@ -154,44 +148,47 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 
 ### Window config
 for_window [app_id=firefox] move container to workspace number 1
-for_window [class="Steam"] floating enable, move container to workspace number 4
+for_window [class=steam] floating enable, move container to workspace number 4
+for_window [class=steamwebhelper] floating enable, move container to workspace number 4
 for_window [app_id=pavucontrol] floating enable
-for_window [app_id=blueberry] floating enable
 for_window [app_id=piper] floating enable
-for_window [app_id=spotify] floating enable
+for_window [app_id=nm-connection-editor] floating enable
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 2
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### Appearance
+set $black      #434758
+set $red        #f07178
+set $blue       #82aaff
+set $white      #d0d0d0
+set $magneta    #c792ea
+set $darkblue   #363959
+
 bar {
     status_command i3status-rs
     position top
-    font pango:FiraCode Nerd Font SemiBold 12
+    font pango:$font_family, Font Awesome 6 Free SemiBold $font_size
     separator_symbol ""
     colors {
-        background #3E4452
-        statusline #D0D0D0
-        focused_workspace #82AAFF #82AAFF #3E4452
-        active_workspace #333333 #333333 #ffffff
-        inactive_workspace #333333 #333333 #888888
-        urgent_workspace #2f343a #900000 #ffffff
+        background          $darkblue
+        statusline          $white
+        focused_workspace   $blue   $blue   #3E4452
+        active_workspace    #333333 #333333 #ffffff
+        inactive_workspace  #333333 #333333 #888888
+        urgent_workspace    #2f343a #900000 #ffffff
     }
     workspace_min_width 25px
     tray_output none
 }
+
 gaps inner 0
 gaps outer 0
 smart_gaps off
 default_border pixel 3
 default_floating_border normal
 titlebar_padding 5 1
-
-set $black      #434758
-set $red        #f07178
-set $blue       #82aaff
-set $white      #d0d0d0
-set $magneta    #c792ea
+hide_edge_borders smart
 
 # class                 border     backgr.    text     indic.   child_border
 client.focused          $blue      $blue      $black   $black   $blue
@@ -200,7 +197,7 @@ client.unfocused        $black     $black     $white   $black   $black
 client.urgent           $magneta   $magneta   $black   $black   $magneta
 
 # Increase swaywm title window font and cursor size
-font pango:FiraCode Nerd Font SemiBold 12
+font pango:$font_family SemiBold 14
 seat seat0 xcursor_theme default 30
 
 # GTK-3.0
@@ -210,5 +207,6 @@ exec_always {
     gsettings set $gnome-schema cursor-theme 'Adwaita'
     gsettings set $gnome-schema cursor-size 30
     gsettings set $gnome-schema font-name 'DejaVu Sans 14'
+    gsettings set org.gnome.desktop.sound event-sounds false
 }
 include /etc/sway/config.d/*

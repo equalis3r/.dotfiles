@@ -1,7 +1,8 @@
-font=FiraCode Nerd Font 12
+font=Iosevka Nerd Font 12
 background-color=#232136
 text-color=#b9bfca
 padding=10
+height=300
 border-size=3
 default-timeout=5000
 icons=1

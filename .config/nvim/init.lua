@@ -1,50 +1,40 @@
-require("plugins")
-require("lsp")
-require("treesitter")
-require("mappings")
-require("completion")
+--Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
---vim.o.hlsearch = false
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.o.mouse = "a" --Enable mouse mode
-vim.o.breakindent = true
-vim.opt.undofile = true --Save undo history
+require("keymaps")
+require("lazy").setup("plugins")
 
---Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
---Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = "yes"
-
---Set tab
-vim.o.expandtab = true
-vim.o.smarttab = true
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-
---Set colorscheme (order is important here)
-vim.o.termguicolors = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.mouse = "a"
+vim.opt.breakindent = true
+vim.opt.undofile = true
+vim.opt.ignorecase = true --Case insensitive searching UNLESS /C
+vim.opt.smartcase = true
+vim.opt.updatetime = 200
+vim.opt.signcolumn = "yes"
+vim.opt.showmode = false -- Dont show mode since we have a statusline
+vim.opt.expandtab = true
+vim.opt.smarttab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
+vim.opt.termguicolors = true
 
 --Treesitter folding method
 vim.cmd("setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()")
 vim.o.foldlevel = 99
 
--- Hightlight on yank
+-- Highlight on yank
 vim.cmd("au TextYankPost * lua vim.highlight.on_yank {}")
-
---Map blankline
-vim.g.indent_blankline_char = "┊"
-vim.g.indent_blankline_filetype_exclude = { "help", "packer" }
-vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-vim.g.indent_blankline_char_highlight = "LineNr"
-vim.g.indent_blankline_show_trailing_blankline_indent = false
-
---DiagnosticSign
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end

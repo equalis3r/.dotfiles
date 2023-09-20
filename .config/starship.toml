@@ -1,13 +1,13 @@
 add_newline = false
 
 [character]
-success_symbol = "[➜](bold #c3e88d)"
-error_symbol = "[➜](bold #dc6068)"
+success_symbol = "[](bold #c3e88d)"
+error_symbol = "[](bold #dc6068)"
 vicmd_symbol = "[](bold #c3e88d)"
 
 [directory]
 truncation_length = 5
-truncation_symbol = "…/"
+truncation_symbol = "… /"
 truncate_to_repo = false
 style = "bold #82aaff"
 
